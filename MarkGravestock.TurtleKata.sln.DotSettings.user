@@ -1,0 +1,13 @@
+﻿<wpf:ResourceDictionary xml:space="preserve" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:s="clr-namespace:System;assembly=mscorlib" xmlns:ss="urn:shemas-jetbrains-com:settings-storage-xaml" xmlns:wpf="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
+	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=0b427b31_002D2db8_002D4ea9_002D9be1_002D7090eba54fd3/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="My test" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
+  &lt;TestAncestor&gt;&#xD;
+    &lt;TestId&gt;xUnit::CDAADE1F-226B-41EA-8A6F-7BA5B92BA786::.NETCoreApp,Version=v3.1::ObjectOrientedTurtle.It can move some distance in the current direction&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;xUnit::CDAADE1F-226B-41EA-8A6F-7BA5B92BA786::.NETCoreApp,Version=v3.1::ObjectOrientedTurtle.It can Turn a certain number of degrees clockwise&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;xUnit::CDAADE1F-226B-41EA-8A6F-7BA5B92BA786::.NETCoreApp,Version=v3.1::ObjectOrientedTurtle.It can Turn a certain number of degrees anticlockwise&lt;/TestId&gt;&#xD;
+  &lt;/TestAncestor&gt;&#xD;
+&lt;/SessionState&gt;</s:String>
+	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=2543e522_002D0d77_002D4de2_002Db6a2_002D463e66021e94/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="ObjectOrientedTurtle" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
+  &lt;TestAncestor&gt;&#xD;
+    &lt;TestId&gt;xUnit::CDAADE1F-226B-41EA-8A6F-7BA5B92BA786::.NETCoreApp,Version=v3.1::ObjectOrientedTurtle&lt;/TestId&gt;&#xD;
+  &lt;/TestAncestor&gt;&#xD;
+&lt;/SessionState&gt;</s:String></wpf:ResourceDictionary>
