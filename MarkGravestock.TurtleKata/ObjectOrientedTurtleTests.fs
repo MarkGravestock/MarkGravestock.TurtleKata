@@ -9,6 +9,11 @@ type PenColour = Red = 0 | Black = 1 | Blue = 2
 [<Measure>]
 type Degrees
 
+[<Measure>]
+type Radians
+
+let convertToRadiansFromDegree angle = (Math.PI / 180.0<Degrees>) * angle
+
 type Position = double
 
 type Distance = double
@@ -61,7 +66,7 @@ type Turtle() =
     member this.Move (distance:Distance) =
         let startX = x
         let startY = y
-        let radians = (Math.PI / 180.0<Degrees>) * angle
+        let radians = convertToRadiansFromDegree angle
         x <- x + (distance * Math.Cos radians)
         y <- y + (distance * Math.Sin radians)
         
