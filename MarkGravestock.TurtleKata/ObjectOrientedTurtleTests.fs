@@ -37,6 +37,8 @@ type HtmlSvgWriter(fileName) =
             let fileContents = "<html><body><svg height='210' width='500'>" + lineText + "</svg></body></html>"
             File.WriteAllText (fileName, fileContents) 
 
+[<Measure>]
+type Degrees
 
 type Turtle() =
     
@@ -47,14 +49,14 @@ type Turtle() =
     
     let mutable penColour = PenColour.Black
     
-    let mutable directionInDegrees = 0.0
+    let mutable angle = 0.0<Degrees>
     
     let mutable isPenDown = true
     
     member this.Move distance =
         let startX = x
         let startY = y
-        let radians = (Math.PI / 180.0) * directionInDegrees
+        let radians = (Math.PI / 180.0<Degrees>) * angle
         x <- x + (distance * Math.Cos radians)
         y <- y + (distance * Math.Sin radians)
         
@@ -63,7 +65,7 @@ type Turtle() =
             lines <- List.append lines [line]
 
     member this.TurnClockwise degreesToTurn =
-        directionInDegrees <- (directionInDegrees + degreesToTurn) % 360.0
+        angle <- (angle + degreesToTurn) % 360.0<Degrees>
 
     member this.TurnAntiClockwise degreesToTurn =
         this.TurnClockwise -degreesToTurn
@@ -103,7 +105,7 @@ let ``It can Turn a certain number of degrees clockwise`` () =
     
     let turtle = Turtle()
     
-    turtle.TurnClockwise 90.0
+    turtle.TurnClockwise 90.0<Degrees>
 
     turtle.Move 100.0
     
@@ -114,7 +116,7 @@ let ``It can Turn a certain number of degrees anticlockwise`` () =
     
     let turtle = Turtle()
     
-    turtle.TurnAntiClockwise 90.0
+    turtle.TurnAntiClockwise 90.0<Degrees>
 
     turtle.Move 100.0
     
@@ -156,14 +158,14 @@ let ``It can draw lines in SVG`` () =
     
     turtle.Move 100.0
     turtle.SetPenColour PenColour.Red
-    turtle.TurnClockwise 90.0
+    turtle.TurnClockwise 90.0<Degrees>
     turtle.Move 100.0
     turtle.PenUp
-    turtle.TurnClockwise 90.0
+    turtle.TurnClockwise 90.0<Degrees>
     turtle.Move 100.0
     turtle.PenDown
     turtle.SetPenColour PenColour.Blue
-    turtle.TurnClockwise 90.0
+    turtle.TurnClockwise 90.0<Degrees>
     turtle.Move 100.0    
     
     turtle.Write (HtmlSvgWriter(".\Test.html"))
