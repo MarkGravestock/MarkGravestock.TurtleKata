@@ -14,15 +14,16 @@ type Radians
 
 let convertToRadiansFromDegree angle = (Math.PI / 180.0<Degrees>) * angle
 
-type Position = double
-
 type Distance = double
 
+type Position = {
+    x: Distance
+    y: Distance
+}
+
 type Line = {
-    FromX: Position
-    FromY: Position
-    ToX: Position
-    ToY: Position
+    From: Position
+    To: Position
     PenColour: PenColour
     }    
 
@@ -42,7 +43,7 @@ type HtmlSvgWriter(fileName) =
                         | PenColour.Blue -> "(0,0,255)"
                         | _ -> failwith "Invalid Colour"
                         
-                let svg = sprintf "<line x1='%f' y1='%f' x2='%f' y2='%f' style='stroke:rgb%s;stroke-width:2' />" line.FromX line.FromY line.ToX line.ToY rgb
+                let svg = sprintf "<line x1='%f' y1='%f' x2='%f' y2='%f' style='stroke:rgb%s;stroke-width:2' />" line.From.x line.From.y line.To.x line.To.x rgb
                 svg
 
             let lineText = list |> List.map lineToSvg |> List.fold (+) ""
@@ -71,7 +72,7 @@ type Turtle() =
         y <- y + (distance * Math.Sin radians)
         
         if isPenDown then
-            let line = { FromX = startX; FromY = startY; ToX = x; ToY = y; PenColour = penColour }
+            let line = { From = {x = startX; y = startY}; To = {x = x; y = y} ; PenColour = penColour }
             lines <- List.append lines [line]
 
     member this.TurnClockwise degreesToTurn =
