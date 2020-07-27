@@ -14,6 +14,8 @@ type Degrees
 [<Measure>]
 type Radians
 
+type Angle = double
+
 let convertToRadiansFromDegree angle = (Math.PI / 180.0<Degrees>) * angle
 
 type Distance = double
@@ -184,4 +186,22 @@ let ``It can draw lines in SVG`` () =
     turtle.Move 100.0    
     
     turtle.Write (HtmlSvgWriter(".\Test.html"))
+
+let drawPolygon (turtle: Turtle) sides =
+
+    let turnAngle = 360.0<Degrees> / float sides
+    
+    for i in [1..sides] do
+        turtle.Move 100.0
+        turtle.TurnClockwise turnAngle
+    
+
+[<Fact>]
+let ``It can draw a heptagon in SVG`` () =
+    
+    let turtle = Turtle()
+    
+    drawPolygon turtle 7
+    
+    turtle.Write (HtmlSvgWriter(".\Heptagon.html"))
 
