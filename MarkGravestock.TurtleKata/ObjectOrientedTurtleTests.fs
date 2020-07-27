@@ -6,6 +6,38 @@ open System.IO
 
 type PenColour = Red = 0 | Black = 1 | Blue = 2
 
+type Line = {
+    FromX: double
+    FromY: double
+    ToX: double
+    ToY: double
+    PenColour: PenColour
+    }    
+
+type LineWriter =
+    abstract member WriteTo: List<Line> -> Unit
+
+type HtmlSvgWriter(fileName) =
+    
+    interface LineWriter with
+        member this.WriteTo list =
+            
+            let lineToSvg line = 
+                let rgb =
+                    match line.PenColour with
+                        | PenColour.Black -> "(0,0,0)"
+                        | PenColour.Red -> "(255,0,0)"
+                        | PenColour.Blue -> "(0,0,255)"
+                        | _ -> failwith "Invalid Colour"
+                        
+                let svg = sprintf "<line x1='%f' y1='%f' x2='%f' y2='%f' style='stroke:rgb%s;stroke-width:2' />" line.FromX line.FromY line.ToX line.ToY rgb
+                svg
+
+            let lineText = list |> List.map lineToSvg |> List.fold (+) ""
+            let fileContents = "<html><body><svg height='210' width='500'>" + lineText + "</svg></body></html>"
+            File.WriteAllText (fileName, fileContents) 
+
+
 type Turtle() =
     
     let mutable lines = List.empty
@@ -27,16 +59,8 @@ type Turtle() =
         y <- y + (distance * Math.Sin radians)
         
         if isPenDown then
-            let rgb =
-                match penColour with
-                    | PenColour.Black -> "(0,0,0)"
-                    | PenColour.Red -> "(255,0,0)"
-                    | PenColour.Blue -> "(0,0,255)"
-                    | _ -> failwith "Invalid Colour"
-                    
-            let svg = sprintf "<line x1='%f' y1='%f' x2='%f' y2='%f' style='stroke:rgb%s;stroke-width:2' />" startX startY x y rgb
-            let newLine = [svg]
-            lines <- List.append lines newLine
+            let line = { FromX = startX; FromY = startY; ToX = x; ToY = y; PenColour = penColour }
+            lines <- List.append lines [line]
 
     member this.TurnClockwise degreesToTurn =
         directionInDegrees <- (directionInDegrees + degreesToTurn) % 360.0
@@ -63,9 +87,10 @@ type Turtle() =
         penColour = colour
     
     member this.ToHtmlFile name =
-        let lineText = lines |> List.fold (+) ""
-        let fileContents = "<html><body><svg height='210' width='500'>" + lineText + "</svg></body></html>"
-        File.WriteAllText (name, fileContents) 
+        this.Write (HtmlSvgWriter(name))
+            
+    member private this.Write (writer:LineWriter) =
+        writer.WriteTo lines
         
 [<Fact>]
 let ``It can move some distance in the current direction`` () =
