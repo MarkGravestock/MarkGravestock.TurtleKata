@@ -86,10 +86,7 @@ type Turtle() =
     member this.HasPenColour colour =
         penColour = colour
     
-    member this.ToHtmlFile name =
-        this.Write (HtmlSvgWriter(name))
-            
-    member private this.Write (writer:LineWriter) =
+    member this.Write (writer:LineWriter) =
         writer.WriteTo lines
         
 [<Fact>]
@@ -169,4 +166,5 @@ let ``It can draw lines in SVG`` () =
     turtle.TurnClockwise 90.0
     turtle.Move 100.0    
     
-    turtle.ToHtmlFile ".\Test.html"
+    turtle.Write (HtmlSvgWriter(".\Test.html"))
+
