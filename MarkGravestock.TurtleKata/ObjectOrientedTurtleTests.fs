@@ -4,7 +4,9 @@ open Xunit
 open System
 open System.IO
 
-type PenColour = Red = 0 | Black = 1 | Blue = 2
+type PenColour = Red | Black| Blue
+
+type PenState = Up | Down
 
 [<Measure>]
 type Degrees
@@ -25,6 +27,7 @@ type Line = {
     From: Position
     To: Position
     PenColour: PenColour
+    PenState: PenState
     }    
 
 type LineWriter =
@@ -43,10 +46,12 @@ type HtmlSvgWriter(fileName) =
                         | PenColour.Blue -> "(0,0,255)"
                         | _ -> failwith "Invalid Colour"
                         
-                let svg = sprintf "<line x1='%f' y1='%f' x2='%f' y2='%f' style='stroke:rgb%s;stroke-width:2' />" line.From.x line.From.y line.To.x line.To.x rgb
+                let svg = sprintf "<line x1='%f' y1='%f' x2='%f' y2='%f' style='stroke:rgb%s;stroke-width:2' />" line.From.x line.From.y line.To.x line.To.y rgb
                 svg
+                
+            let drawLine line = line.PenState = PenState.Down    
 
-            let lineText = list |> List.map lineToSvg |> List.fold (+) ""
+            let lineText = list |> List.filter drawLine |> List.map lineToSvg |> List.fold (+) ""
             let fileContents = "<html><body><svg height='210' width='500'>" + lineText + "</svg></body></html>"
             File.WriteAllText (fileName, fileContents) 
 
@@ -62,7 +67,7 @@ type Turtle() =
     
     let mutable angle = 0.0<Degrees>
     
-    let mutable isPenDown = true
+    let mutable penState = PenState.Down
     
     member this.Move (distance:Distance) =
         let startX = x
@@ -71,9 +76,8 @@ type Turtle() =
         x <- x + (distance * Math.Cos radians)
         y <- y + (distance * Math.Sin radians)
         
-        if isPenDown then
-            let line = { From = {x = startX; y = startY}; To = {x = x; y = y} ; PenColour = penColour }
-            lines <- List.append lines [line]
+        let line = { From = {x = startX; y = startY}; To = {x = x; y = y} ; PenColour = penColour; PenState = penState }
+        lines <- List.append lines [line]
 
     member this.TurnClockwise degreesToTurn =
         angle <- (angle + degreesToTurn) % 360.0<Degrees>
@@ -85,13 +89,13 @@ type Turtle() =
         Math.Abs(x - expectedX) < 0.00001 && Math.Abs(y - expectedY) < 0.00001
     
     member this.PenUp =
-        isPenDown <- false
+        penState <- PenState.Up
         
     member this.PenDown =
-        isPenDown <- true
+        penState <- PenState.Down
         
     member this.DrewLine =
-        isPenDown
+        penState = PenState.Down
     
     member this.SetPenColour colour =
         penColour <- colour
