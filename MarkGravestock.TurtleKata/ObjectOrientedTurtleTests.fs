@@ -6,11 +6,18 @@ open System.IO
 
 type PenColour = Red = 0 | Black = 1 | Blue = 2
 
+[<Measure>]
+type Degrees
+
+type Position = double
+
+type Distance = double
+
 type Line = {
-    FromX: double
-    FromY: double
-    ToX: double
-    ToY: double
+    FromX: Position
+    FromY: Position
+    ToX: Position
+    ToY: Position
     PenColour: PenColour
     }    
 
@@ -37,8 +44,6 @@ type HtmlSvgWriter(fileName) =
             let fileContents = "<html><body><svg height='210' width='500'>" + lineText + "</svg></body></html>"
             File.WriteAllText (fileName, fileContents) 
 
-[<Measure>]
-type Degrees
 
 type Turtle() =
     
@@ -53,7 +58,7 @@ type Turtle() =
     
     let mutable isPenDown = true
     
-    member this.Move distance =
+    member this.Move (distance:Distance) =
         let startX = x
         let startY = y
         let radians = (Math.PI / 180.0<Degrees>) * angle
