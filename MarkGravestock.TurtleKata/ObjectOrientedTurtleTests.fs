@@ -35,7 +35,25 @@ module ObjectOrientedTurtle =
     open Turtle
     open System
     open System.IO
-    
+
+    let writeHtmlSvg list fileName =
+        let lineToSvg line = 
+            let rgb =
+                match line.PenColour with
+                    | PenColour.Black -> "(0,0,0)"
+                    | PenColour.Red -> "(255,0,0)"
+                    | PenColour.Blue -> "(0,0,255)"
+                    
+            let svg = sprintf "<line x1='%f' y1='%f' x2='%f' y2='%f' style='stroke:rgb%s;stroke-width:2' />" line.From.x line.From.y line.To.x line.To.y rgb
+            svg
+            
+        let drawLine line = line.PenState = PenState.Down    
+
+        let lineText = list |> List.filter drawLine |> List.map lineToSvg |> List.fold (+) ""
+        let fileContents = "<html><body><svg height='210' width='500'>" + lineText + "</svg></body></html>"
+        File.WriteAllText (fileName, fileContents) 
+        
+        
     type LineWriter =
         abstract member WriteTo: List<Line> -> Unit
 
@@ -44,21 +62,7 @@ module ObjectOrientedTurtle =
         interface LineWriter with
             member this.WriteTo list =
                 
-                let lineToSvg line = 
-                    let rgb =
-                        match line.PenColour with
-                            | PenColour.Black -> "(0,0,0)"
-                            | PenColour.Red -> "(255,0,0)"
-                            | PenColour.Blue -> "(0,0,255)"
-                            
-                    let svg = sprintf "<line x1='%f' y1='%f' x2='%f' y2='%f' style='stroke:rgb%s;stroke-width:2' />" line.From.x line.From.y line.To.x line.To.y rgb
-                    svg
-                    
-                let drawLine line = line.PenState = PenState.Down    
-
-                let lineText = list |> List.filter drawLine |> List.map lineToSvg |> List.fold (+) ""
-                let fileContents = "<html><body><svg height='210' width='500'>" + lineText + "</svg></body></html>"
-                File.WriteAllText (fileName, fileContents) 
+                writeHtmlSvg list fileName
 
     type Turtle() =
         
