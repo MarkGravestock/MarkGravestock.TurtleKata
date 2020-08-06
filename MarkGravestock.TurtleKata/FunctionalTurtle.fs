@@ -3,12 +3,13 @@
 open TurtleKata
 open TurtleKata.Turtle
 open System
+open System.IO
 open ObjectOrientedTurtle
 
 type Move =
     { angle: float<Degrees>
       distance: Distance }
-
+            
 let moveTurtle startPosition penState penColour angle distance =
     let radians = convertToRadiansFromDegree angle
     { From = startPosition
@@ -29,8 +30,40 @@ let addTurtleMove (lines: Line list) penState penColour angle distance =
 let isAtPosition actual expected =
     Math.Abs(actual.x - expected.x) < 0.00001 && Math.Abs(actual.y - expected.y) < 0.00001
 
-module TurtleTests =
+type State = {
+        Position: Position
+        PenColour: PenColour
+        PenState: PenState
+    }
 
+let move (move:Move) (currentState:State) =
+    let radians = convertToRadiansFromDegree move.angle
+        
+    let newPosition : Position = {
+            x = currentState.Position.x + (move.distance * Math.Cos radians)
+            y = currentState.Position.y + (move.distance * Math.Sin radians) }
+                                                          
+    let newState = {
+        Position = newPosition 
+        PenColour = currentState.PenColour
+        PenState = currentState.PenState
+    }
+    
+    newState
+
+let penUp currentState =
+    
+    let newState = {
+        Position = currentState.Position 
+        PenColour = currentState.PenColour
+        PenState = PenState.Up
+    }
+    
+    newState
+    
+    
+module TurtleTests =
+   
     open Xunit
 
     [<Fact>]
@@ -109,6 +142,52 @@ module TurtleTests =
 
         let lines = addTurtleMove lines penState penColour angle distance
         
-        writeHtmlSvg lines ".\FunctionalTest.html"
+        let fileName = ".\FunctionalTest.html"
 
+        writeHtmlSvg lines fileName 
+        
+        Assert.True(File.Exists(fileName))
+         
+    [<Fact>]
+    let ``It can move to another position`` () =
+
+        let initialState = {
+            Position = {
+                x = 0.0
+                y = 0.0
+            }
+            PenColour = PenColour.Black
+            PenState = PenState.Down
+        }
+
+        let moveOneHundredAtZeroDegrees = {
+            angle = 0.0<Degrees>
+            distance = 100.0
+        }
+        
+        let finalState = initialState |> move moveOneHundredAtZeroDegrees |> move moveOneHundredAtZeroDegrees 
+        
+        Assert.True (isAtPosition finalState.Position {
+           x = 200.0
+           y = 0.0
+         })
+        
+    [<Fact>]
+    let ``It can put the pen up`` () =
+
+        let initialState = {
+            Position = {
+                x = 0.0
+                y = 0.0
+            }
+            PenColour = PenColour.Black
+            PenState = PenState.Down
+        }
+        
+        let finalState = initialState |> penUp 
+        
+        Assert.Equal (finalState.PenState, PenState.Up)
+        
+        
+        
 

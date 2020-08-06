@@ -1,4 +1,7 @@
 module TurtleKata
+
+open System.IO
+
 module Turtle =
 
     open System
@@ -197,8 +200,12 @@ module ObjectOrientedTurtleTests =
         turtle.TurnClockwise 90.0<Degrees>
         turtle.Move 100.0    
         
-        turtle.Write (HtmlSvgWriter(".\Test.html"))
+        let fileName = ".\Test.html"
+        
+        turtle.Write (HtmlSvgWriter(fileName))
 
+        Assert.True(File.Exists(fileName))
+        
     let drawPolygon (turtle: Turtle) sides =
 
         let turnAngle = 360.0<Degrees> / float sides
@@ -215,5 +222,8 @@ module ObjectOrientedTurtleTests =
         
         drawPolygon turtle 7
         
-        turtle.Write (HtmlSvgWriter(".\Heptagon.html"))
+        let fileName = ".\Heptagon.html"
 
+        turtle.Write (HtmlSvgWriter(fileName))
+
+        Assert.True(File.Exists(fileName))

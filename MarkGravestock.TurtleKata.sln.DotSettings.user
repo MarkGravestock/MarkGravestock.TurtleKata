@@ -6,15 +6,15 @@
     &lt;TestId&gt;xUnit::CDAADE1F-226B-41EA-8A6F-7BA5B92BA786::.NETCoreApp,Version=v3.1::ObjectOrientedTurtle.It can Turn a certain number of degrees anticlockwise&lt;/TestId&gt;&#xD;
   &lt;/TestAncestor&gt;&#xD;
 &lt;/SessionState&gt;</s:String>
-	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=2543e522_002D0d77_002D4de2_002Db6a2_002D463e66021e94/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="ObjectOrientedTurtle" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
-  &lt;TestAncestor&gt;&#xD;
-    &lt;TestId&gt;xUnit::CDAADE1F-226B-41EA-8A6F-7BA5B92BA786::.NETCoreApp,Version=v3.1::FunctionalTurtle+TurtleTests&lt;/TestId&gt;&#xD;
-  &lt;/TestAncestor&gt;&#xD;
-&lt;/SessionState&gt;</s:String>
+	
 	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=8bf92772_002Dce3e_002D44d6_002D96a0_002D8d827ad8589f/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="It can move from the last position to another position" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
   &lt;TestAncestor&gt;&#xD;
     &lt;TestId&gt;xUnit::CDAADE1F-226B-41EA-8A6F-7BA5B92BA786::.NETCoreApp,Version=v3.1::FunctionalTurtle+TurtleTests.It can move from the last position to another position&lt;/TestId&gt;&#xD;
     &lt;TestId&gt;xUnit::CDAADE1F-226B-41EA-8A6F-7BA5B92BA786::.NETCoreApp,Version=v3.1::FunctionalTurtle+TurtleTests.It can render the lines as svg&lt;/TestId&gt;&#xD;
     &lt;TestId&gt;xUnit::CDAADE1F-226B-41EA-8A6F-7BA5B92BA786::.NETCoreApp,Version=v3.1::TurtleKata+ObjectOrientedTurtleTests&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;xUnit::CDAADE1F-226B-41EA-8A6F-7BA5B92BA786::.NETCoreApp,Version=v3.1::FunctionalTurtle+TurtleTests.It can move to another position&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;xUnit::CDAADE1F-226B-41EA-8A6F-7BA5B92BA786::.NETCoreApp,Version=v3.1::FunctionalTurtle+TurtleTests.It can pipeline&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;xUnit::CDAADE1F-226B-41EA-8A6F-7BA5B92BA786::.NETCoreApp,Version=v3.1::FunctionalTurtle+TurtleTests.It can put the pen up&lt;/TestId&gt;&#xD;
   &lt;/TestAncestor&gt;&#xD;
-&lt;/SessionState&gt;</s:String></wpf:ResourceDictionary>
+&lt;/SessionState&gt;</s:String>
+	</wpf:ResourceDictionary>
